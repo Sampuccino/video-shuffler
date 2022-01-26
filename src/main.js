@@ -1,7 +1,12 @@
 import Vue from 'vue'
+import Buefy from 'buefy'
+import 'video.js/dist/video-js.min.css'
+import 'buefy/dist/buefy.css'
 import App from './App.vue'
 
 Vue.config.productionTip = false
+
+Vue.use(Buefy)
 
 new Vue({
   render: h => h(App),
