@@ -197,8 +197,10 @@ ipcMain.handle("loadSavedDirectories", async () => {
 ipcMain.on("onLoadDirectoryFiles", (event, args) => {
   // let active_files = [];
 
-  let sql = (args === "EVERYTHING") ? 'SELECT * FROM ` media `' : 'SELECT * FROM ` media ` where settings_id = ?';
-  if (args === "EVERYTHING") {
+  console.log('We have a selected value of ', args)
+
+  let sql = 'SELECT * FROM ` media `';
+  if (args[0] === "EVERYTHING") {
     db.all(sql, (err, rows) => {
       if(err) {
         // case error
@@ -214,12 +216,15 @@ ipcMain.on("onLoadDirectoryFiles", (event, args) => {
     })
   })  
   } else {
-    db.all(sql, [args], (err, rows) => {
+    // Build the SQL query based on the amount of items in the args[0] argueement
+    args.forEach((arg, index) => {
+      (index === 0)? sql += ' where settings_id = ?': sql += ' OR settings_id = ?'
+    })
+    db.all(sql, [...args], (err, rows) => {
       if(err) {
         // case error
         console.error(err);
       }
-      // active_files = rows;
         fs.writeFile(files_path, JSON.stringify(rows), err => {
         if (err) {
           console.error(err)

@@ -48,7 +48,7 @@
           Select one of your saved directory below to load those files.
         </p>
 
-        <b-field label="Directories">
+        <!-- <b-field label="Directories">
           <b-select placeholder="Select a directory" v-model="selected">
             <option
               class="has-background-dark has-text-white"
@@ -59,9 +59,19 @@
               {{ option.filepath }}
             </option>
           </b-select>
-        </b-field>
+        </b-field> -->
 
-        <b-button type="is-dark" @click="onLoadDirectoryFiles()">load</b-button>
+        <b-table
+          :data="options"
+          :columns="columns"
+          :checked-rows.sync="checkedRows"
+          checkable
+          :checkbox-position="checkboxPosition"
+        ></b-table>
+
+        <b-button type="is-dark" class="mt-5" @click="onLoadDirectoryFiles()"
+          >load</b-button
+        >
       </article>
     </section>
   </div>
@@ -75,6 +85,24 @@ export default {
       filename: "some_file_in_base_directory",
       options: [],
       selected: null,
+      checkboxPosition: "left",
+      checkedRows: [],
+      columns: [
+        {
+          field: "settings_id",
+          label: "ID",
+          width: "40",
+          numeric: true,
+        },
+        {
+          field: "directory",
+          label: "Directory",
+        },
+        {
+          field: "filepath",
+          label: "Filepath",
+        },
+      ],
     };
   },
   mounted() {
@@ -144,7 +172,22 @@ export default {
       }
     },
     onLoadDirectoryFiles() {
-      window.api.send("onLoadDirectoryFiles", this.selected);
+      // Check if EVERYTHING is inlcluded
+      const EVERYTHING = this.checkedRows.find(
+        (o) => o.settings_id === "EVERYTHING"
+      );
+      let checked = [];
+      if (EVERYTHING !== undefined) {
+        this.checkedRows.forEach((c) => {
+          c.settings_id === "EVERYTHING" ? checked.push(c.settings_id) : null;
+        });
+      } else {
+        this.checkedRows.forEach((c) => {
+          checked.push(c.settings_id);
+        });
+      }
+      console.log(checked);
+      window.api.send("onLoadDirectoryFiles", checked);
       this.$emit("directoryID", this.selected);
     },
   },
