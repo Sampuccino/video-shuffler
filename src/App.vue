@@ -58,7 +58,7 @@
         :play="play"
       />
       <!-- Favorites -->
-      <Favorites v-if="active === 1" />
+      <Favorites v-if="active === 1" :mediaFiles="files" />
       <!-- Settings -->
       <Settings
         v-show="active === 2"
