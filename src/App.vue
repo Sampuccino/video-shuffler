@@ -126,6 +126,7 @@ export default {
 
       // Update source with next element
       const old_source = this.next[0];
+      console.error("Next Track Old Source ", old_source);
       // Add next track to previous list
       this.previousTrackIndex++;
       this.previous.push(old_source); // [{p,f...]}]
@@ -147,7 +148,10 @@ export default {
       this.next.push({
         f: this.files[randomNum].filename,
         p: this.files[randomNum].filepath,
-        favorited: this.files[randomNum].favorited,
+        favorited: {
+          media_id: this.files[randomNum].media_id,
+          favorited: this.files[randomNum].favorited,
+        },
       });
     },
     onTogglePlay(toggle) {
