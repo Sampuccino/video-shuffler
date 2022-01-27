@@ -72,6 +72,12 @@
         <b-button type="is-dark" class="mt-5" @click="onLoadDirectoryFiles()"
           >load</b-button
         >
+        <b-button
+          class="mt-5 ml-3"
+          label="delete"
+          type="is-warning"
+          @click="confirm"
+        />
       </article>
     </section>
   </div>
@@ -190,11 +196,33 @@ export default {
       window.api.send("onLoadDirectoryFiles", checked);
       this.$emit("directoryID", this.selected);
     },
+    confirm() {
+      this.$buefy.dialog.confirm({
+        message: "Are you sure you want to delete the selected sources?",
+        onConfirm: () => {
+          // Filter out the everything object
+          // Check which available sources are available for loading
+          // IF nothing, leave blank
+          let allowed = [];
+          this.checkedRows.forEach((e) => {
+            e.settings_id !== "EVERYTHING" ? allowed.push(e.settings_id) : null;
+          });
+
+          allowed.length
+            ? console.log("Now deleting sources ", allowed)
+            : console.log("NO sources to delete ", allowed);
+          this.$buefy.toast.open("Sources deleted");
+        },
+      });
+    },
   },
 };
 </script>
 <style >
 .settings-component {
   background-color: #ffffff;
+}
+.is-warning {
+  border-radius: 0;
 }
 </style>

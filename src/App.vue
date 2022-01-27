@@ -48,7 +48,7 @@
       <!-- Home -->
       <!-- Files -->
       <Home
-        v-if="active === 0"
+        v-show="active === 0"
         :directoryId="directoryID"
         :mediaFiles="files"
         :playing="playing"

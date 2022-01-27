@@ -5,5 +5,5 @@ module.exports = {
       // Or, for multiple preload files:
     //   preload: { preload: 'src/preload.js', otherPreload: 'src/preload2.js' }
     }
-  }
+  },
 }

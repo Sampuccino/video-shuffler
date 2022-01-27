@@ -1,6 +1,9 @@
 <template>
   <!-- Things to display. ID / Image or File Icon / Favorite / Filename / Directory -->
-  <div v-if="source.favorited" class="p-3 media-row">
+  <div
+    class="p-3 media-row"
+    @dblclick="onPlaySelectedTrack(source.filepath, source.filename)"
+  >
     <b class="mr-5">{{ index }}</b>
     <span v-if="!source.favorited" class="mr-5">
       <i class="fas fa-heart follow-unfollow" @click="hasFavorited(source)"></i>
@@ -77,6 +80,21 @@ export default {
           type: "is-success",
         });
       }
+    },
+    onPlaySelectedTrack(filepath, filename) {
+      document
+        .getElementById("videoPlayer")
+        .getElementsByTagName("video")[0].src = "file://" + filepath;
+      // Play the selected video
+      document
+        .getElementById("videoPlayer")
+        .getElementsByTagName("video")[0]
+        .play();
+      this.$buefy.toast.open({
+        message: `Now playing ${filename}`,
+        position: "is-bottom",
+        type: "is-success",
+      });
     },
   },
 };

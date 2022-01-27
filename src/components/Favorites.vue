@@ -6,7 +6,7 @@
           <virtual-list
             style="height: 750px; overflow-y: auto"
             :data-key="'media_id'"
-            :data-sources="mediaFiles"
+            :data-sources="files"
             :data-component="itemComponent"
           />
         </div>
@@ -27,8 +27,13 @@ export default {
   data() {
     return {
       itemComponent: FavoriteItem,
-      files: this.mediaFiles,
+      files: [],
     };
+  },
+  beforeMount() {
+    this.mediaFiles.forEach((e) => {
+      e.favorited ? this.files.push(e) : null;
+    });
   },
 };
 </script>

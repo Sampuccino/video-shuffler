@@ -1,5 +1,7 @@
 # video-shuffler
 This project is made with Electron, VueJS and SQLITE3. The primary focus of this project is to create a local media file eadinng and shuffler for those wanting to watch their favorite TV Shows, Movies or whatever in a random order.
+### Compiles and hot-reloads for development
+Rename the files.example.json to files.json and shuffle.example.db to shuffle.db
 
 ## Project setup
 ```
