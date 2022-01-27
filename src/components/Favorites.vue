@@ -1,11 +1,10 @@
 <template>
   <div class="container-fluid">
-    Favorites
     <div class="columns">
       <div class="column is-12">
         <div class="white-container p-3">
           <virtual-list
-            style="height: 650px; overflow-y: auto"
+            style="height: 750px; overflow-y: auto"
             :data-key="'media_id'"
             :data-sources="mediaFiles"
             :data-component="itemComponent"

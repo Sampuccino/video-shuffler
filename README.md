@@ -44,3 +44,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 #### Default UI while playing a video playlist
 ![VS-Demo-001](/video-shuffler-002.png)
+
+#### The Favorites list tab
+![VS-Demo-001](/favorites-list.png)
+
+#### The Settings list tab
+The settings tab is a bit interesting so here is some more information about it. When you are loading in a directory with 2 subdirectories, in order to capture those 2 subdirectories, it is best to have any time of file like a image or whatever inside the base directory and select that image in the base directory when choosing the filepath. This will allow the program to utilize and start reading and building the new items filepaths from that location and will recursiely also get those 2 subdirectories and those files within.
+![VS-Demo-001](/settings-view.png)
