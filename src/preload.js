@@ -14,7 +14,7 @@ contextBridge.exposeInMainWorld(
     "api", {
         send: (channel, data) => {
             // whitelist channels
-            let validChannels = ["onSaveSetting", "onLoadDirectoryFiles","onUpdateFavorited"];
+            let validChannels = ["onSaveSetting", "onLoadDirectoryFiles","onUpdateFavorited", "onDeleteSources"];
             if (validChannels.includes(channel)) {
                 ipcRenderer.send(channel, data);
             }

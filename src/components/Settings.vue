@@ -192,7 +192,6 @@ export default {
           checked.push(c.settings_id);
         });
       }
-      console.log(checked);
       window.api.send("onLoadDirectoryFiles", checked);
       this.$emit("directoryID", this.selected);
     },
@@ -208,10 +207,16 @@ export default {
             e.settings_id !== "EVERYTHING" ? allowed.push(e.settings_id) : null;
           });
 
-          allowed.length
-            ? console.log("Now deleting sources ", allowed)
-            : console.log("NO sources to delete ", allowed);
-          this.$buefy.toast.open("Sources deleted");
+          // Remove the items from the options that dont belong anymore
+          this.options = this.options.filter(function (o) {
+            return !allowed.includes(o.settings_id);
+          });
+
+          allowed.length ? window.api.send("onDeleteSources", allowed) : null;
+          this.$buefy.toast.open({
+            message: "Sources deleted",
+            position: "is-bottom",
+          });
         },
       });
     },

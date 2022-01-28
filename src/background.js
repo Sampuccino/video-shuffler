@@ -18,9 +18,7 @@ const files_path = path.resolve('src/database', 'files.json');
 let db = new sqlite3.Database(db_path, sqlite3.OPEN_READWRITE, (err) => {
   if (err) {
     console.error(err.message);
-  }
-  // console.log('Connected to the Shufffle database with tables ', db_path);
-});
+  }});
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -195,10 +193,6 @@ ipcMain.handle("loadSavedDirectories", async () => {
  * ******************************************
  */
 ipcMain.on("onLoadDirectoryFiles", (event, args) => {
-  // let active_files = [];
-
-  console.log('We have a selected value of ', args)
-
   let sql = 'SELECT * FROM ` media `';
   if (args[0] === "EVERYTHING") {
     db.all(sql, (err, rows) => {
@@ -274,4 +268,35 @@ ipcMain.on("onUpdateFavorited", async (event, args) => {
   }
   });
   await readAndWriteFile(files_path, args.id, args.favorited);
+})
+
+ipcMain.on('onDeleteSources', (event, args) => {
+    let media_sql = 'DELETE from ` media `';
+  let settings_sql = 'DELETE from settings';
+  // Loop over an add more arguements if needed
+  args.forEach((e, index) => {
+
+    if (index === 0) {
+    media_sql += ' WHERE settings_id = ?'
+      settings_sql += ' WHERE settings_id = ?'
+    } else {
+          media_sql += ' OR settings_id = ?'
+      settings_sql += ' OR settings_id = ?'
+      }
+  })
+
+  // Delete MEDIA before SETTINGS
+  db.run(media_sql, args, (err) => {
+    if(err) {
+      return console.log(err.message); 
+    }
+    // record inserted correctly
+  })
+
+  db.run(settings_sql, args, (err) => {
+    if(err) {
+      return console.log(err.message); 
+    }
+    // record inserted correctly
+  })
 })

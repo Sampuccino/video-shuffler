@@ -193,13 +193,13 @@ export default {
       });
       if (flag) {
         this.$buefy.toast.open({
-          message: "Item has been removed from favorites",
+          message: "Item has been added to favorites",
           position: "is-bottom",
           type: "is-success",
         });
       } else {
         this.$buefy.toast.open({
-          message: "Item has been favorited",
+          message: "Item has been removed from favorited",
           position: "is-bottom",
           type: "is-success",
         });
