@@ -106,13 +106,6 @@ if (isDevelopment) {
 
 ipcMain.on('onSaveSetting', (event, args) => {
   
-  console.log('IPC MAIN onSaveSetting ', args)
-
-  // Also grab and search for all files in the directories up to 1 level deep and INSTERT all those file paths into the DB
-  // Also prevent duplicates if possible
-  // Read the directory for all files and all subdirectories files up to 1 level deep
-  // /home/samuel/Downloads/🔴 Transfer-XXX
-
   // Check DB to see if thee Directory already exists
   const sql = 'SELECT * FROM settings where filepath = ?';
 
@@ -134,10 +127,6 @@ ipcMain.on('onSaveSetting', (event, args) => {
   }
     
     if (!row) {
-      // INSERT new directory, path and files
-      // process to generate file paths and store      
-      // Insert
-      // In the future check if the path already exist to remove duplicates
       db.run('INSERT INTO settings(directory, filepath) VALUES(?, ?)', [args.directory, args.path], function(err) {
         if(err) {
           return console.log(err.message); 
